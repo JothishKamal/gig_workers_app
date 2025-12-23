@@ -83,13 +83,77 @@ lib/
     ```
 
 3. **Firebase Setup**:
-    Ensure you have `firebase-tools` installed.
+
+   #### Option A: Quick Setup (Automated)
+
+    If you have Firebase CLI installed:
 
     ```bash
+    npm install -g firebase-tools
+    firebase login
     flutterfire configure
     ```
 
-    *This generates `lib/firebase_options.dart` which is required for the app to run.*
+    This will automatically generate `lib/firebase_options.dart`.
+
+   #### Option B: Manual Setup (Using Your Own Firebase Project)
+
+    1. **Create a Firebase Project**:
+       * Go to [Firebase Console](https://console.firebase.google.com/)
+       * Click "Add Project" and follow the setup wizard
+
+    2. **Add Apps to Your Firebase Project**:
+       * **For Android**:
+         * Click "Add App" → Select Android
+         * Register app with package name: `com.example.gig_workers_app`
+         * Download `google-services.json`
+         * Place it in `android/app/` directory
+
+       * **For iOS** (if needed):
+         * Click "Add App" → Select iOS
+         * Register app with bundle ID: `com.example.gigWorkersApp`
+         * Download `GoogleService-Info.plist`
+         * Place it in `ios/Runner/` directory
+
+    3. **Enable Firebase Services**:
+       * **Authentication**:
+         * Go to Authentication → Sign-in method
+         * Enable "Email/Password" provider
+
+       * **Firestore Database**:
+         * Go to Firestore Database → Create database
+         * Start in **Production mode** (recommended) or Test mode
+         * Choose a location closest to your users
+         * **Important**: Create a composite index for queries:
+           * Collection: `tasks`
+           * Fields: `userId` (Ascending), `dueDate` (Ascending)
+           * Or wait for the error in console and click the provided link
+
+       * **Firestore Rules** (For production):
+
+         ```javascript
+         rules_version = '2';
+         service cloud.firestore {
+           match /databases/{database}/documents {
+             match /tasks/{taskId} {
+               allow read, write: if request.auth != null && 
+                                     request.auth.uid == resource.data.userId;
+               allow create: if request.auth != null && 
+                                request.auth.uid == request.resource.data.userId;
+             }
+           }
+         }
+         ```
+
+    4. **Generate Flutter Configuration** (if using manual setup):
+
+       ```bash
+       flutterfire configure
+       ```
+
+       Select your existing Firebase project from the list.
+
+    > **Note**: The `google-services.json` and `GoogleService-Info.plist` files are already in `.gitignore` to prevent accidental commits.
 
 4. **Run the App**:
 
