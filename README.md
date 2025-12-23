@@ -2,7 +2,7 @@
 
 A robust, production-ready Task Management application built with Flutter, designed for Gig Workers to organize their daily tasks efficiently.
 
-## 🚀 Features
+## Features
 
 ### Core Functionality
 
@@ -101,4 +101,4 @@ lib/
 
 | Login Page | Task List (Dark) | Add Task (Light) |
 |:---:|:---:|:---:|
-| *(Add Screenshot)* | *(Add Screenshot)* | *(Add Screenshot)* |
+| <img src="https://github.com/JothishKamal/gig_workers_app/blob/main/screenshots/login.png?raw=true" width="200" height="400"> | <img src="https://github.com/JothishKamal/gig_workers_app/blob/main/screenshots/task_list.png?raw=true" width="200" height="400"> | <img src="https://github.com/JothishKamal/gig_workers_app/blob/main/screenshots/add_task.png?raw=true" width="200" height="400"> |
