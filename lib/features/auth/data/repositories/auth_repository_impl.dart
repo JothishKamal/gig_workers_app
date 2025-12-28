@@ -13,7 +13,10 @@ class AuthRepositoryImpl implements AuthRepository {
   Stream<UserEntity?> get authStateChanges => remoteDataSource.authStateChanges;
 
   @override
-  Future<Result<UserEntity, Failure>> login({required String email, required String password}) async {
+  Future<Result<UserEntity, Failure>> login({
+    required String email,
+    required String password,
+  }) async {
     try {
       final userModel = await remoteDataSource.login(email, password);
       return Success(userModel);
@@ -25,7 +28,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<UserEntity, Failure>> signUp({required String email, required String password}) async {
+  Future<Result<UserEntity, Failure>> signUp({
+    required String email,
+    required String password,
+  }) async {
     try {
       final userModel = await remoteDataSource.signUp(email, password);
       return Success(userModel);
@@ -38,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Result<void, Failure>> logout() async {
-     try {
+    try {
       await remoteDataSource.logout();
       return const Success(null);
     } on Failure catch (e) {
